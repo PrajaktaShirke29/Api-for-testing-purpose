@@ -1,12 +1,11 @@
 const faker = require('faker');
 const utils = require('../lib/util');
-const modelMysql = require('../models/registerMysql')
+const modelMysql = require('../models/registerMysql');
+
 const userRegisterMysql = (details) => {
     return new Promise((resolve, reject) => {
         try {
-
-            console.log("registered");
-
+            
             let multiUserData = [];
             for (let i = 0; i < details.numberOfUser; i++) {
                 let singleEntryData = [];
@@ -35,7 +34,7 @@ const userRegisterMysql = (details) => {
                 }).catch((err) => {
                     reject(err);
                 })
-            resolve();
+            resolve(multiUserData);
         } catch (err) {
             reject(err)
         }
@@ -43,6 +42,42 @@ const userRegisterMysql = (details) => {
 
 }
 
+const userRegisterJson = (details) => {
+    return new Promise((resolve, reject) => {
+        try {
+            console.log("registered");
+            let multiUserData = [];
+
+            for(let i = 0 ; i< details.numberOfUser; i++){
+                let data = utils.getDummyDataObject(details.fields)
+                console.log(data);
+                multiUserData.push(data);
+            }
+            multiUserData.forEach(e => {
+                modelMysql.userRegisterxlsx(e, details.api);
+            })
+            resolve(multiUserData);
+        } catch (err) {
+            reject(err)
+        }
+    })
+}
+
+const userRegisterXlsx = (details, api) => {
+    return new Promise((resolve, reject) => {
+        try {
+            details.forEach(e => {
+                modelMysql.userRegisterxlsx(e, api);
+            })
+            resolve(details);
+        } catch (err) {
+            reject(err)
+        }
+    })
+}
+
 module.exports = {
-    userRegisterMysql
+    userRegisterMysql,
+    userRegisterJson,
+    userRegisterXlsx
 }

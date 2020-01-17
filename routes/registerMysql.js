@@ -45,7 +45,10 @@ router.post('/', (req, res, next) => {
 router.post('/json', json2xls.middleware, (req, res, next) => {
     register.userRegisterJson(req.body)
         .then((result) => {
-            res.xls('registerUser.xlsx', result);
+            // res.xls('registerUser.xlsx', result);
+            res
+                .status(200)
+                .json({ message: 'User Resgistrated successfully', result: result });
         })
         .catch((err) => {
             res

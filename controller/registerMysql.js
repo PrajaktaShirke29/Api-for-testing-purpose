@@ -53,9 +53,9 @@ const userRegisterJson = (details) => {
                 console.log(data);
                 multiUserData.push(data);
             }
-            multiUserData.forEach(e => {
-                modelMysql.userRegisterxlsx(e, details.api);
-            })
+            // multiUserData.forEach(e => {
+            //     modelMysql.userRegisterxlsx(e, details.api);
+            // })
             resolve(multiUserData);
         } catch (err) {
             reject(err)
